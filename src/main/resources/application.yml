@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: "jdbc:mysql://localhost:3306/jinx"
+    username: "root"
+    password: "tygh8868!"
+  jpa:
+    hibernate:
+      ddl-auto: none

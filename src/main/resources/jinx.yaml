@@ -1,0 +1,36 @@
+profiles:
+  dev:
+    naming:
+      maxLength: 64
+    database:
+      dialect: "mysql"
+      url: "jdbc:mysql://localhost:3306/jinx"
+      username: "root"
+      password: "tygh8868!"
+    output:
+      format: "sql"
+      directory: "build/jinx/sql"
+
+  test:
+    naming:
+      maxLength: 128
+    database:
+      dialect: "mysql"
+      url: "jdbc:mysql://localhost:3306/jinx"
+      username: "root"
+      password: "tygh8868!"
+    output:
+      format: "yaml"
+      directory: "build/jinx/test"
+
+  prod:
+    naming:
+      maxLength: 255
+    database:
+      dialect: "mysql"
+      url: "jdbc:mysql://localhost:3306/jinx"
+      username: "root"
+      password: "tygh8868!"
+    output:
+      format: "sql"
+      directory: "/var/lib/jinx/sql"
