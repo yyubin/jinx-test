@@ -5,7 +5,7 @@ Jinx 기능을 검증하기 위한 **샘플 프로젝트**입니다.
 
 ---
 
-## 📂 프로젝트 구조
+## 프로젝트 구조
 
 ```
 org.jinx.jinxtest
@@ -17,17 +17,16 @@ org.jinx.jinxtest
  │   ├── Reptile
  │   └── Zoo
  │
- └── jinxoutput/
-      ├── json/        # 스키마 스냅샷
+ └── build/
+      ├── classes/java/main/jinx/    # 스키마 스냅샷
       │   └── schema-20250922011352.json
-      └── sql/         # 마이그레이션 SQL
-          ├── V20250922010911__migration__jinxHead_.sql
-          └── V20250922011352__migration__jinxHead_.sql
+      └── jinx/                      # 마이그레이션 SQL
+          └── V20250922010911__migration__jinxHead_sha256_8f152f7962221a53d47cda6acd7edd458deeb5db4db4111f220fc5be44f28de2.sql
 ```
 
 ---
 
-## 🚀 실행 방법
+## 실행 방법
 
 ### 1. 의존성 추가
 
@@ -68,7 +67,7 @@ tasks.register('jinxMigrate', JavaExec) {
 ./gradlew build
 ```
 
-→ `jinxoutput/json/`에 `schema-*.json` 파일이 생성됩니다.
+`build/classes/java/main/jinx/`에 `schema-*.json` 파일이 생성됩니다.
 
 ---
 
@@ -78,11 +77,11 @@ tasks.register('jinxMigrate', JavaExec) {
 ./gradlew jinxMigrate
 ```
 
-→ `jinxoutput/sql/`에 마이그레이션 SQL이 생성됩니다.
+`build/jinx/`에 마이그레이션 SQL이 생성됩니다.
 
 ---
 
-## 📝 예시 결과
+## 예시 결과
 
 Jinx가 생성한 SQL 일부입니다:
 
