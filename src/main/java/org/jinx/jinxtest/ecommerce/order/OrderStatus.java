@@ -1,0 +1,6 @@
+package org.jinx.jinxtest.ecommerce.order;
+
+public enum OrderStatus {
+    CART, PENDING_PAYMENT, PAYMENT_CONFIRMED, PREPARING, SHIPPED, DELIVERED,
+    CANCELLED, RETURN_REQUESTED, RETURNED, PARTIALLY_SHIPPED, ON_HOLD
+}

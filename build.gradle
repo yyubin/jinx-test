@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.5'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id("io.github.yyubin.jinx") version "0.1.2"
 }
 
 group = 'org.jinx'
@@ -34,8 +35,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-	implementation "io.github.yyubin:jinx-core:0.0.6"
-	annotationProcessor "io.github.yyubin:jinx-processor:0.0.6"
+	implementation "io.github.yyubin:jinx-core:0.1.2"
+	annotationProcessor "io.github.yyubin:jinx-processor:0.1.2"
 
 }
 
@@ -44,8 +45,7 @@ configurations {
 }
 
 dependencies {
-	// CLI 바이너리 (트랜지티브 포함)
-	jinxCli "io.github.yyubin:jinx-cli:0.0.6"
+	jinxCli "io.github.yyubin:jinx-cli:0.1.2"
 }
 
 tasks.register('jinx', JavaExec) {
@@ -54,11 +54,17 @@ tasks.register('jinx', JavaExec) {
 	classpath = configurations.jinxCli
 	mainClass = 'org.jinx.cli.JinxCli'
 
-	// 기본 인자 (원하면 바꿔도 됨)
+	// 기본 인자
 	args 'db', 'migrate'
 
 	// 엔티티가 먼저 컴파일되어 스키마 JSON이 생성되도록
 	dependsOn 'classes'
+}
+
+compileJava {
+	options.compilerArgs += [
+			'-Ajinx.profile=dev'
+	]
 }
 
 tasks.named('test') {

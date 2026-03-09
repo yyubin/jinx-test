@@ -2,6 +2,7 @@ profiles:
   dev:
     naming:
       maxLength: 64
+      strategy: SNAKE_CASE
     database:
       dialect: "mysql"
       url: "jdbc:mysql://localhost:3306/jinx"
@@ -14,6 +15,7 @@ profiles:
   test:
     naming:
       maxLength: 128
+      strategy: SNAKE_CASE
     database:
       dialect: "mysql"
       url: "jdbc:mysql://localhost:3306/jinx"
@@ -26,6 +28,7 @@ profiles:
   prod:
     naming:
       maxLength: 255
+      strategy: SNAKE_CASE
     database:
       dialect: "mysql"
       url: "jdbc:mysql://localhost:3306/jinx"
