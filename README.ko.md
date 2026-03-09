@@ -383,7 +383,7 @@ classDiagram
     Animal <|-- Bird
     Animal <|-- Reptile
     Mammal "1" --> "0..1" MammalProfile : "프로필"
-    Animal }o--o| Zoo : "소속 동물원"
+    Animal "*" --> "0..1" Zoo : "소속 동물원"
 ```
 
 ---

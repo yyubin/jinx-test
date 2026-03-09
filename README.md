@@ -385,7 +385,7 @@ classDiagram
     Animal <|-- Bird
     Animal <|-- Reptile
     Mammal "1" --> "0..1" MammalProfile : "has profile"
-    Animal }o--o| Zoo : "lives in"
+    Animal "*" --> "0..1" Zoo : "lives in"
 ```
 
 ---
