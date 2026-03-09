@@ -349,43 +349,6 @@ erDiagram
     Customer ||--o{ customer_wishlist : "위시리스트"
 ```
 
-### Animal 도메인 (샘플 JOINED 계층)
-
-```mermaid
-classDiagram
-    class Animal {
-        <<abstract>>
-        Long id
-        String name
-        AnimalType type
-        Zoo zoo
-    }
-    class Mammal {
-        boolean hasFur
-    }
-    class Bird {
-        Double wingspan
-    }
-    class Reptile {
-        Boolean venomous
-    }
-    class MammalProfile {
-        Long id
-        String diet
-        Mammal mammal
-    }
-    class Zoo {
-        Long id
-        String location
-    }
-
-    Animal <|-- Mammal
-    Animal <|-- Bird
-    Animal <|-- Reptile
-    Mammal "1" --> "0..1" MammalProfile : "프로필"
-    Animal "*" --> "0..1" Zoo : "소속 동물원"
-```
-
 ---
 
 ## jinx가 정확히 처리하는 것들
@@ -488,6 +451,23 @@ CREATE TABLE `Inventory` (
 ### ✅ ENUM, UNIQUE, NOT NULL, DECIMAL 정밀도
 
 `@Enumerated(STRING)`, `unique = true`, `nullable = false`, `precision/scale` 선언이 생성된 DDL에 빠짐없이 반영됩니다.
+
+---
+
+## 실제 산출물
+
+이 프로젝트의 엔티티 모델로부터 생성된 스키마 스냅샷과 마이그레이션 SQL이 저장소에 직접 커밋되어 있습니다.
+
+```
+src/main/java/org/jinx/jinxtest/jinxoutput/
+├── json/
+│   └── schema-20260309225310.json                          # 스키마 스냅샷
+└── sql/
+    └── V20260309225310__migration__jinxHead_sha256_....sql  # 마이그레이션 SQL
+```
+
+- **`json/`** — 컴파일 타임에 Annotation Processor가 캡처한 스키마 스냅샷입니다. 모든 엔티티의 구조 정보가 담겨 있습니다.
+- **`sql/`** — MySQL에 바로 적용 가능한 버전 관리 마이그레이션 SQL입니다. 파일명에 스냅샷의 SHA-256 체크섬이 포함되어 무결성을 검증합니다.
 
 ---
 

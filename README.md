@@ -351,43 +351,6 @@ erDiagram
     Customer ||--o{ customer_wishlist : "wishlists"
 ```
 
-### Animal Domain (sample JOINED hierarchy)
-
-```mermaid
-classDiagram
-    class Animal {
-        <<abstract>>
-        Long id
-        String name
-        AnimalType type
-        Zoo zoo
-    }
-    class Mammal {
-        boolean hasFur
-    }
-    class Bird {
-        Double wingspan
-    }
-    class Reptile {
-        Boolean venomous
-    }
-    class MammalProfile {
-        Long id
-        String diet
-        Mammal mammal
-    }
-    class Zoo {
-        Long id
-        String location
-    }
-
-    Animal <|-- Mammal
-    Animal <|-- Bird
-    Animal <|-- Reptile
-    Mammal "1" --> "0..1" MammalProfile : "has profile"
-    Animal "*" --> "0..1" Zoo : "lives in"
-```
-
 ---
 
 ## What jinx Gets Right
@@ -490,6 +453,23 @@ CREATE TABLE `Inventory` (
 ### ✅ ENUM, UNIQUE, NOT NULL, DECIMAL Precision
 
 Every `@Enumerated(STRING)`, `unique = true`, `nullable = false`, and `precision/scale` declaration is faithfully reflected in the generated DDL.
+
+---
+
+## Actual Output
+
+The generated schema snapshot and migration SQL produced from this project's entity model are committed directly to the repository for reference.
+
+```
+src/main/java/org/jinx/jinxtest/jinxoutput/
+├── json/
+│   └── schema-20260309225310.json                          # Schema snapshot
+└── sql/
+    └── V20260309225310__migration__jinxHead_sha256_....sql  # Migration SQL
+```
+
+- **`json/`** — Schema snapshot captured by the annotation processor at compile time. Contains the full structural representation of every entity.
+- **`sql/`** — Versioned migration SQL ready to apply against a MySQL database. Filename includes a SHA-256 checksum of the snapshot for integrity verification.
 
 ---
 
