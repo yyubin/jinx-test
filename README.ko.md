@@ -14,7 +14,7 @@
 | Spring Boot | 3.5.5 |
 | 애플리케이션 데이터베이스 | MySQL 8 |
 | 마이그레이션 검증 | PostgreSQL 16 |
-| jinx | `0.1.2` |
+| jinx | `0.1.4` |
 
 ---
 
@@ -24,18 +24,18 @@
 
 ```gradle
 plugins {
-    id("io.github.yyubin.jinx") version "0.1.2"
+    id("io.github.yyubin.jinx") version "0.1.4"
 }
 
 dependencies {
-    implementation "io.github.yyubin:jinx-core:0.1.2"
-    annotationProcessor "io.github.yyubin:jinx-processor:0.1.2"
+    implementation "io.github.yyubin:jinx-core:0.1.4"
+    annotationProcessor "io.github.yyubin:jinx-processor:0.1.4"
 }
 
 configurations { jinxCli }
 
 dependencies {
-    jinxCli "io.github.yyubin:jinx-cli:0.1.2"
+    jinxCli "io.github.yyubin:jinx-cli:0.1.4"
 }
 
 tasks.register('jinx', JavaExec) {

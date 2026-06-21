@@ -16,7 +16,7 @@ This project deliberately defines a **production-grade, deeply complex entity mo
 | Spring Boot | 3.5.5 |
 | Application database | MySQL 8 |
 | Migration verification | PostgreSQL 16 |
-| jinx | `0.1.2` |
+| jinx | `0.1.4` |
 
 ---
 
@@ -26,18 +26,18 @@ This project deliberately defines a **production-grade, deeply complex entity mo
 
 ```gradle
 plugins {
-    id("io.github.yyubin.jinx") version "0.1.2"
+    id("io.github.yyubin.jinx") version "0.1.4"
 }
 
 dependencies {
-    implementation "io.github.yyubin:jinx-core:0.1.2"
-    annotationProcessor "io.github.yyubin:jinx-processor:0.1.2"
+    implementation "io.github.yyubin:jinx-core:0.1.4"
+    annotationProcessor "io.github.yyubin:jinx-processor:0.1.4"
 }
 
 configurations { jinxCli }
 
 dependencies {
-    jinxCli "io.github.yyubin:jinx-cli:0.1.2"
+    jinxCli "io.github.yyubin:jinx-cli:0.1.4"
 }
 
 tasks.register('jinx', JavaExec) {
