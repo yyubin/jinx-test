@@ -12,7 +12,8 @@
 |---|---|
 | Java | 21 |
 | Spring Boot | 3.5.5 |
-| Database | MySQL 8 |
+| 애플리케이션 데이터베이스 | MySQL 8 |
+| 마이그레이션 검증 | PostgreSQL 16 |
 | jinx | `0.1.2` |
 
 ---
@@ -463,11 +464,21 @@ src/main/java/org/jinx/jinxtest/jinxoutput/
 ├── json/
 │   └── schema-20260309225310.json                          # 스키마 스냅샷
 └── sql/
-    └── V20260309225310__migration__jinxHead_sha256_....sql  # 마이그레이션 SQL
+    ├── V20260309225310__migration__jinxHead_sha256_....sql  # MySQL 마이그레이션 SQL
+    ├── V20260621150033__migration__jinxHead_sha256_9281f3b1fde0dbf1cc0f1887076373690a4803b5c3b7c01b0144804dcc1d8d0f.sql  # PostgreSQL 마이그레이션 SQL
+    └── rollback-20260621150033.sql                          # PostgreSQL 롤백 SQL
 ```
 
 - **`json/`** — 컴파일 타임에 Annotation Processor가 캡처한 스키마 스냅샷입니다. 모든 엔티티의 구조 정보가 담겨 있습니다.
-- **`sql/`** — MySQL에 바로 적용 가능한 버전 관리 마이그레이션 SQL입니다. 파일명에 스냅샷의 SHA-256 체크섬이 포함되어 무결성을 검증합니다.
+- **`sql/`** — 버전 관리 마이그레이션 SQL입니다. MySQL 산출물은 애플리케이션의 현재 데이터베이스 설정에 적용 가능하며, 교차 DB 검증을 위해 PostgreSQL 마이그레이션과 롤백 산출물도 함께 커밋했습니다. 버전 관리 파일명에는 스냅샷의 SHA-256 체크섬이 포함되어 무결성을 검증합니다.
+
+### PostgreSQL 16 검증
+
+PostgreSQL 산출물은 2026-06-21에 격리된 PostgreSQL 16 컨테이너에서 실제 실행으로 검증했습니다.
+
+- 마이그레이션: `src/main/java/org/jinx/jinxtest/jinxoutput/sql/V20260621150033__migration__jinxHead_sha256_9281f3b1fde0dbf1cc0f1887076373690a4803b5c3b7c01b0144804dcc1d8d0f.sql`
+- 롤백: `src/main/java/org/jinx/jinxtest/jinxoutput/sql/rollback-20260621150033.sql`
+- 결과: 마이그레이션이 성공적으로 완료되어 테이블 30개와 외래 키 37개가 생성됐고, 이후 롤백도 성공적으로 완료되어 테이블과 외래 키가 각각 0개임을 확인했습니다.
 
 ---
 

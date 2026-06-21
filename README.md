@@ -14,7 +14,8 @@ This project deliberately defines a **production-grade, deeply complex entity mo
 |---|---|
 | Java | 21 |
 | Spring Boot | 3.5.5 |
-| Database | MySQL 8 |
+| Application database | MySQL 8 |
+| Migration verification | PostgreSQL 16 |
 | jinx | `0.1.2` |
 
 ---
@@ -465,11 +466,21 @@ src/main/java/org/jinx/jinxtest/jinxoutput/
 ├── json/
 │   └── schema-20260309225310.json                          # Schema snapshot
 └── sql/
-    └── V20260309225310__migration__jinxHead_sha256_....sql  # Migration SQL
+    ├── V20260309225310__migration__jinxHead_sha256_....sql  # MySQL migration SQL
+    ├── V20260621150033__migration__jinxHead_sha256_9281f3b1fde0dbf1cc0f1887076373690a4803b5c3b7c01b0144804dcc1d8d0f.sql  # PostgreSQL migration SQL
+    └── rollback-20260621150033.sql                          # PostgreSQL rollback SQL
 ```
 
 - **`json/`** — Schema snapshot captured by the annotation processor at compile time. Contains the full structural representation of every entity.
-- **`sql/`** — Versioned migration SQL ready to apply against a MySQL database. Filename includes a SHA-256 checksum of the snapshot for integrity verification.
+- **`sql/`** — Versioned migration SQL. The MySQL artifact is ready for the application's configured database; the PostgreSQL migration and its rollback artifact are also committed for cross-dialect verification. Versioned filenames include a SHA-256 checksum of the snapshot for integrity verification.
+
+### PostgreSQL 16 verification
+
+The PostgreSQL artifacts were executed against an isolated PostgreSQL 16 container on 2026-06-21.
+
+- Migration: `src/main/java/org/jinx/jinxtest/jinxoutput/sql/V20260621150033__migration__jinxHead_sha256_9281f3b1fde0dbf1cc0f1887076373690a4803b5c3b7c01b0144804dcc1d8d0f.sql`
+- Rollback: `src/main/java/org/jinx/jinxtest/jinxoutput/sql/rollback-20260621150033.sql`
+- Result: migration completed successfully, creating 30 tables and 37 foreign keys; rollback then completed successfully, leaving 0 tables and 0 foreign keys.
 
 ---
 
